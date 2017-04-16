@@ -1,1 +1,2 @@
 # SimpleRealmObjectServerExample
+Simple example of working with a Realm Object Server. Found out more (incl. installation of Object Server on Azure) on my blog [here](http://blog.pieeatingninjas.be/2017/04/16/setting-up-a-realm-object-server-in-azure/)

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SimpleRealmObjectServerExample"
+             x:Class="SimpleRealmObjectServerExample.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:IsCompleteToColorConverter x:Key="isCompleteToColorConverter" />
+         </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Margin="0, 50, 0, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ListView ItemsSource="{Binding Tasks}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Title}" Detail="{Binding Description}" 
+                              TextColor="{Binding IsComplete, Converter={StaticResource isCompleteToColorConverter}}">
+                        <ViewCell.ContextActions>
+                            <MenuItem Command="{Binding ToggleIsCompleteCommand}" CommandParameter="{Binding .}" 
+                                          Text="Toggle IsComplete" IsDestructive="false" />
+                            <MenuItem Command="{Binding DeleteCommand}" CommandParameter="{Binding .}" 
+                                          Text="Delete" IsDestructive="True" />
+                        </ViewCell.ContextActions>
+                    </TextCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Text="Title" />
+            <Entry Text="{Binding NewTaskTitle, Mode=TwoWay}" Grid.Column="1"/>
+            <Label Text="Description" Grid.Row="1" />
+            <Entry Text="{Binding NewTaskDescription, Mode=TwoWay}" Grid.Row="1" Grid.Column="1"/>
+            <Button Grid.ColumnSpan="2" Grid.Row="2" HorizontalOptions="Center" 
+                    Text="Create" Command="{Binding CreateCommand}" />
+        </Grid>
+        <Grid IsVisible="{Binding IsLoading}"  
+              Grid.RowSpan="2" BackgroundColor="White"
+              VerticalOptions="FillAndExpand" 
+              HorizontalOptions="FillAndExpand">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" 
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+</ContentPage>
